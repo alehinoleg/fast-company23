@@ -2,7 +2,6 @@ import React, { useState } from "react";
 
 import api from "./API";
 
-import BageBig from "./components/BageBig";
 import Users from "./components/users";
 
 const App = () => {
@@ -35,12 +34,12 @@ const App = () => {
 
     return (
         <>
-            <BageBig userLength={users.length} renderPhrase={renderPhrase} />
             <Users
                 userLength={users.length}
                 users={users}
                 handleDelete={handleDelete}
                 handleBookmark={handleBookmark}
+                renderPhrase={renderPhrase}
             />
         </>
     );
