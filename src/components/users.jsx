@@ -14,7 +14,7 @@ const Users = ({
     handleBookmark,
     renderPhrase
 }) => {
-    const pageSize = 6;
+    const pageSize = 4;
     const [currentPage, setCurrentPage] = useState(1);
     const [professions, setProfessions] = useState(api.professions.fetchAll());
     const [selectedProf, setSelectedProf] = useState();
