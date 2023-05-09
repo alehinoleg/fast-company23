@@ -1,7 +1,14 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-const BageBig = ({ userLength, renderPhrase }) => {
+const BageBig = ({ userLength }) => {
+    const renderPhrase = (number) => {
+        const lastOne = Number(number.toString().slice(-1));
+        if ((number > 4 && number < 15) || lastOne === 1) return "человек тусанет";
+        if ([2, 3, 4].indexOf(lastOne) >= 0) return "человека тусанут";
+        // if (lastOne === 1) return "человек тусанет"
+        return "человек туcанет";
+    };
     return (
         <h2>
             <span
@@ -20,8 +27,7 @@ const BageBig = ({ userLength, renderPhrase }) => {
 };
 
 BageBig.propTypes = {
-    userLength: PropTypes.number.isRequired,
-    renderPhrase: PropTypes.func.isRequired
+    userLength: PropTypes.number.isRequired
 };
 
 export default BageBig;
