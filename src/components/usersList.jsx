@@ -9,7 +9,7 @@ import GroupList from "./groupList";
 import api from "../API";
 import BageBig from "./BageBig";
 
-const Users = () => {
+const UsersList = () => {
     const [users, setUsers] = useState();
     const pageSize = 6;
     const [currentPage, setCurrentPage] = useState(1);
@@ -105,10 +105,10 @@ const Users = () => {
     return "////loading";
 };
 
-Users.propTypes = {
+UsersList.propTypes = {
     handleDelete: PropTypes.array,
     users: PropTypes.array,
     handleBookmark: PropTypes.func
 };
 
-export default Users;
+export default UsersList;
