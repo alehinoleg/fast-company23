@@ -16,6 +16,7 @@ const UsersList = () => {
     const [professions, setProfessions] = useState(api.professions.fetchAll());
     const [selectedProf, setSelectedProf] = useState();
     const [sortBy, setSortBy] = useState({ iter: "name", order: "asc" });
+    const [searchQuery, setSearchQuery] = useState("");
 
     useEffect(() => {
         api.users.fetchAll().then((data) => setUsers(data));
@@ -41,9 +42,10 @@ const UsersList = () => {
 
     useEffect(() => {
         setCurrentPage(1);
-    }, [selectedProf]);
+    }, [selectedProf, searchQuery]);
 
     const handleProfessionSelect = (item) => {
+        if (searchQuery !== "") setSearchQuery("");
         setSelectedProf(item);
     };
 
@@ -55,9 +57,16 @@ const UsersList = () => {
         setSortBy(item);
     };
 
+    const handleSearchQuery = ({ target }) => {
+        setSelectedProf(undefined);
+        setSearchQuery(target.value);
+    };
+
     if (users) {
         const userLength = users.length;
-        const filteredUsers = selectedProf
+        const filteredUsers = searchQuery
+        ? users.filter(user => user.name.toLowerCase().indexOf(searchQuery.toLowerCase()) !== -1)
+        : selectedProf
             ? users.filter((user) => JSON.stringify(user.profession) === JSON.stringify(selectedProf))
             : users;
         const count = filteredUsers.length;
@@ -82,6 +91,7 @@ const UsersList = () => {
 
                 <div className="d-flex flex-column">
                     <BageBig userLength={count} />
+                    <input type="text" name="searchQuery" placeholder="Search..." onChange={handleSearchQuery} value={searchQuery}/>
                     {userLength !== 0 && (
                         <UsersTable users={usersCrop}
                             handleDelete={handleDelete}

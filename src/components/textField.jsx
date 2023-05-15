@@ -1,12 +1,27 @@
-import React from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
+import { Eye, EyeSlash } from "./icon/icon";
 
 const TextField = ({ label, type, name, value, onChange, error }) => {
+    const [showPassword, setShowPassword] = useState(false);
+    const getInputClasses = () => {
+        return "form-control" + (error ? " is-invalid" : "");
+    };
+
+    const toggleShowPassword = () => {
+        setShowPassword(prevState => !prevState);
+    };
+
     return (
-        <div>
+        <div className="mb-4">
             <label htmlFor={name}>{label}</label>
-            <input type={type} id={name} value={value} onChange={onChange} name={name} />
-            {error && <p>{error}</p>}
+            <div className="input-group has-validation">
+            <input type={showPassword ? "text" : type} id={name} value={value} onChange={onChange} name={name} className={getInputClasses()}/>
+            {type === "password" && (
+                <button className="btn btn-outline-secondary" type="button" onClick={toggleShowPassword}>{!showPassword ? <Eye/> : <EyeSlash/>}</button>
+            )}
+            {error && <div className="invalid-feedback">{error}</div>}
+            </div>
         </div>
      );
 };
